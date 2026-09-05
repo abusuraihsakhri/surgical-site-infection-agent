@@ -3,12 +3,13 @@ Automated Pytest Test Suite for Surgical Site Infection Agent.
 Domain: Clinical & Biomedical AI
 Standard: CAP / CLSI / ISO Standards
 """
+import os
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import pytest
-from agents.base import PHIGuard, AuditLogger, SecurityException
+from agents.base import PHIGuard, AuditLogger, SecurityException, AuditTrail
 from agents.models import SystemTaskPayload, UrgencyLevel, SystemIntegrityStatus
 from agents.workers import InvariantQCWorker, SafetyEscalationWorker, ProtocolConformanceWorker
 from agents.supervisor import SystemSupervisor
@@ -21,6 +22,13 @@ def test_phi_guard_enforcement():
 
     # Clean text passes
     PHIGuard.assert_no_phi("Analytical assay specimen KEY-001 optimal")
+
+
+def test_phi_guard_redaction():
+    redacted = PHIGuard.redact_phi("Contact patient at 555-123-4567 or test@example.com")
+    assert "555-123-4567" not in redacted
+    assert "test@example.com" not in redacted
+    assert "[REDACTED_IDENTIFIER]" in redacted
 
 
 def test_specialized_workers():
@@ -63,3 +71,23 @@ def test_supervisor_consensus_and_audit():
     assert main(["audit", "--task-id", "CLI-TEST-01"]) == 0
     assert main(["chat", "Explain", "specifications"]) == 0
     assert main(["verify-audit"]) == 0
+
+
+def test_audit_trail_uses_env_var():
+    """AuditTrail should use AUDIT_SECRET_KEY from environment when set."""
+    os.environ["AUDIT_SECRET_KEY"] = "test-secret-key-for-audit-trail"
+    trail = AuditTrail()
+    assert trail.secret_key == b"test-secret-key-for-audit-trail"
+    del os.environ["AUDIT_SECRET_KEY"]
+
+
+def test_audit_trail_integrity_with_chained_entries():
+    """Audit trail should maintain cryptographic chain integrity across multiple entries."""
+    os.environ["AUDIT_SECRET_KEY"] = "chain-test-key"
+    trail = AuditTrail()
+    trail.log("actor1", "tier1", "EVENT_A", {"data": "first"})
+    trail.log("actor2", "tier2", "EVENT_B", {"data": "second"})
+    trail.log("actor3", "tier3", "EVENT_C", {"data": "third"})
+    assert trail.verify_integrity() is True
+    assert len(trail.get_trail()) == 3
+    del os.environ["AUDIT_SECRET_KEY"]

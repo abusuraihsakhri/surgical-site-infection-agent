@@ -14,10 +14,11 @@ import datetime
 import json
 import sys
 import uuid
+from enum import Enum
 from typing import Dict, Any, List, Optional
 
 
-class Severity(str):
+class Severity(str, Enum):
     INFO = "INFO"
     ADVISORY = "ADVISORY"
     WARNING = "WARNING"
@@ -44,7 +45,7 @@ class DomainKnowledgeRegistry:
         return warnings
 
 class AgentAlert:
-    def __init__(self, alert_id: str, agent_name: str, severity: str, title: str, details: str, recommendation: str):
+    def __init__(self, alert_id: str, agent_name: str, severity: Severity, title: str, details: str, recommendation: str):
         self.alert_id = alert_id
         self.agent_name = agent_name
         self.severity = severity

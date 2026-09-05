@@ -102,3 +102,31 @@ python simulator.py --tasks 1000 --concurrency 8
 docker build -t surgical-site-infection-agent .
 docker run -p 8000:8000 surgical-site-infection-agent
 ```
+
+Using Docker Compose:
+
+```bash
+# Set a strong audit key before launching
+export AUDIT_SECRET_KEY=$(python -c "import secrets; print(secrets.token_hex(32))")
+docker compose up --build
+```
+
+---
+
+## 🔐 Security Configuration
+
+The HMAC-SHA256 audit trail requires a secret key. Set the `AUDIT_SECRET_KEY` environment variable in production:
+
+```bash
+# Generate a strong key
+python -c "import secrets; print(secrets.token_hex(32))"
+
+# Export it
+export AUDIT_SECRET_KEY=your-generated-key
+```
+
+A `.env.example` file is provided as a template. Copy it to `.env` and customize:
+
+```bash
+cp .env.example .env
+```
