@@ -1,5 +1,5 @@
 """
-Autonomous Bayesian Calibration & Active Learning Feedback Engine for surgical-site-infection-agent.
+Experimental heuristic weight tracker (not Bayesian calibration and not used for inference) for surgical-site-infection-agent.
 """
 import math
 from typing import Dict, Any, List, Optional
