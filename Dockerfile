@@ -9,8 +9,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-COPY pyproject.toml .
-RUN pip install --no-cache-dir fastapi uvicorn pydantic pytest
+COPY pyproject.toml README.md ./
+COPY agents/ ./agents/
+COPY surgical_site_infection_agent/ ./surgical_site_infection_agent/
+RUN pip install --no-cache-dir .
 
 COPY . .
 
