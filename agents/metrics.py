@@ -18,7 +18,7 @@ class SystemMetricsCollector:
     def record_task(self, urgency: str, duration_sec: float):
         self.tasks_total += 1
         self.processing_latency_sum += duration_sec
-        self.audit_blocks_total += 1
+        self.audit_blocks_total += 1  # one signed audit block per completed task
         u_upper = str(urgency).upper()
         if "CRITICAL" in u_upper:
             self.critical_alerts_total += 1
