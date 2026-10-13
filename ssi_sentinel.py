@@ -52,7 +52,7 @@ class DomainKnowledgeRegistry:
         warnings = []
         for key in payload.keys():
             if any(phi_keyword in key.lower() for phi_keyword in ["patient_name", "ssn", "mrn_raw", "dob_raw"]):
-                warnings.append(f"PHI_DEFENSE_TRIGGERED: Direct identifier '{key}' masked to synthetic token.")
+                warnings.append(f"PHI_DEFENSE_TRIGGERED: Direct identifier '{key}' identified for review; the field has NOT been automatically redacted.")
         return warnings
 
 class AgentAlert:
@@ -179,7 +179,7 @@ class SSICoordinator:
         elif "guidelines" in q or "protocol" in q:
             return "This is an illustrative threshold demonstration, not validated CDC/NHSN surveillance classification or clinical guidance."
         else:
-            return f"SSI-Sentinel: Post-Operative Wound Surveillance & CDC NHSN Staging Agent executive agent online. Continuous supervisory monitoring active across all domain parameters."
+            return "Synthetic threshold demonstration ready; no clinical surveillance or monitoring is performed."
 
 
 coordinator = SSICoordinator()
