@@ -105,6 +105,6 @@ class SSICoordinator:
         if "status" in q or "summary" in q:
             return f"SSI-Sentinel: Post-Operative Wound Surveillance & CDC NHSN Staging Agent currently tracking {len(self.case_registry)} cases in on-premises memory."
         elif "guideline" in q or "standard" in q:
-            return "Active clinical surveillance operates under CDC NHSN Surveillance Guidelines validated protocols."
+            return "This is a synthetic threshold demonstration and does not implement CDC/NHSN SSI surveillance definitions."
         else:
-            return f"SSI-Sentinel: Post-Operative Wound Surveillance & CDC NHSN Staging Agent executive agent online. Zero-PHI air-gapped monitoring active."
+            return "Synthetic demonstration coordinator ready; no PHI certification or validated clinical surveillance."
