@@ -27,7 +27,7 @@ PHI_PATTERNS = [
 
 
 class SecurityException(Exception):
-    """Raised when outbound data violates HIPAA Safe Harbor or contains raw PHI."""
+    """Raised when a limited set of potentially identifying input patterns is detected."""
     pass
 
 
