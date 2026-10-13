@@ -28,4 +28,6 @@ surgical-site-infection-engine = "surgical_site_infection_agent.cli:main"
 [project.urls]
 Homepage = "https://github.com/abusuraihsakhri/surgical-site-infection-agent"
 Repository = "https://github.com/abusuraihsakhri/surgical-site-infection-agent.git"
-\n[tool.setuptools.packages.find]\ninclude = ["agents*", "surgical_site_infection_agent*"]\n
+
+[tool.setuptools.packages.find]
+include = ["agents*", "surgical_site_infection_agent*"]
