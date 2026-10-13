@@ -14,7 +14,7 @@ def create_app():
 
         app = FastAPI(
             title="SSI-Sentinel: Post-Operative Wound Surveillance & CDC NHSN Staging Agent",
-            description="Tracks surgical cases across 30-90 day post-op windows, staging superficial, deep incisional, and organ/space SSIs from microbiology and CT reports.",
+            description="Synthetic threshold demonstration; not CDC/NHSN SSI staging or clinical decision support.",
             version="2.0.0-PRO",
         )
 

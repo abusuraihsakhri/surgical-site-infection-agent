@@ -93,7 +93,7 @@ class SSICoordinator:
             "stat_critical_alerts": stat_count,
             "warning_alerts": warn_count,
             "alerts": [a.to_dict() for a in all_alerts],
-            "guideline_standard": "CDC NHSN Surveillance Guidelines",
+            "guideline_standard": "Illustrative thresholds; not CDC/NHSN criteria",
             "consensus_summary": f"Multi-agent supervision completed across 3 sub-agents with status [{status.value}].",
         }
 
@@ -105,6 +105,6 @@ class SSICoordinator:
         if "status" in q or "summary" in q:
             return f"SSI-Sentinel: Post-Operative Wound Surveillance & CDC NHSN Staging Agent currently tracking {len(self.case_registry)} cases in on-premises memory."
         elif "guideline" in q or "standard" in q:
-            return "Active clinical surveillance operates under CDC NHSN Surveillance Guidelines validated protocols."
+            return "This is a synthetic threshold demonstration and does not implement CDC/NHSN SSI surveillance definitions."
         else:
-            return f"SSI-Sentinel: Post-Operative Wound Surveillance & CDC NHSN Staging Agent executive agent online. Zero-PHI air-gapped monitoring active."
+            return "Synthetic demonstration coordinator ready; no PHI certification or validated clinical surveillance."

@@ -9,7 +9,7 @@ from .models import ClinicalCasePayload, AgentAlert, UrgencyLevel, ClinicalInteg
 
 
 class ClinicalDomainEngine:
-    GUIDELINE = "CDC NHSN Surveillance Guidelines"
+    GUIDELINE = "Illustrative thresholds; not CDC/NHSN criteria"
     PRIMARY_BASELINE_LIMIT = 20.0
     SECONDARY_ALERT_LIMIT = 10.0
 
@@ -18,8 +18,8 @@ class ClinicalDomainEngine:
         if value > cls.PRIMARY_BASELINE_LIMIT:
             return {
                 "title": "Primary Metric Threshold Exceeded",
-                "finding": f"Observed value ({value:.2f}) exceeds CDC NHSN Surveillance Guidelines clinical baseline limit ({cls.PRIMARY_BASELINE_LIMIT:.1f}).",
-                "recommendation": "Perform immediate secondary verification and calibration review.",
+                "finding": f"Observed value ({value:.2f}) exceeds illustrative (non-clinical) threshold ({cls.PRIMARY_BASELINE_LIMIT:.1f}).",
+                "recommendation": "Review the synthetic input and demonstration threshold.",
             }
         return None
 
@@ -29,7 +29,7 @@ class ClinicalDomainEngine:
             return {
                 "title": "STAT Kinetic Escalation Triggered",
                 "finding": f"Kinetic parameter ({value:.2f}) with STAT={is_stat} requires prioritized supervision.",
-                "recommendation": "Activate closed-loop verbal clinician notification protocol per Joint Commission standards.",
+                "recommendation": "Review the demonstration flag; this is not a clinical escalation instruction.",
             }
         return None
 
@@ -40,6 +40,6 @@ class ClinicalDomainEngine:
             return {
                 "title": "Phenotypic / Biomarker Discordance Identified",
                 "finding": f"Status flag '{status_flag}' indicates divergence from standard diagnostic concordance.",
-                "recommendation": f"Order reflex confirmatory testing per CDC NHSN Surveillance Guidelines clinical recommendations.",
+                "recommendation": f"Review the synthetic descriptor; no clinical action is implied.",
             }
         return None
