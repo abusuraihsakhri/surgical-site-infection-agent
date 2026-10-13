@@ -10,9 +10,11 @@ import pytest
 client = TestClient(app)
 
 def sample(**changes):
-    return dict(task_id="CASE-TEST", target_identifier="SYNTH-01",
-                primary_metric=10.0, secondary_metric=2.0,
-                status_descriptor="NOMINAL", is_critical_flag=False, **changes)
+    values = dict(task_id="CASE-TEST", target_identifier="SYNTH-01",
+                  primary_metric=10.0, secondary_metric=2.0,
+                  status_descriptor="NOMINAL", is_critical_flag=False)
+    values.update(changes)
+    return values
 
 def test_html_frontend_and_health():
     assert client.get("/health").status_code == 200
